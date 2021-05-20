@@ -1,7 +1,6 @@
 import javax.swing.JPanel;
 import java.awt.event.*;
 
-import javax.net.ssl.TrustManager;
 import javax.swing.*;
 import java.util.Random;
 import java.awt.*;
@@ -43,6 +42,7 @@ public class GamePanel extends JPanel implements ActionListener
     //constructor
     GamePanel()
     {
+        System.out.println("hello?");
         random = new Random();
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.black);
@@ -53,19 +53,31 @@ public class GamePanel extends JPanel implements ActionListener
     //methods
     public void startGame()
     {
-
+        newApple();
+        run = true;
+        timer = new Timer(delay,this);
+        timer.start();
     }
     public void paintComponent(Graphics g)
     {
-
+        System.out.println("is paint being called?");
+        super.paintComponent(g);
+        draw(g);
     }
     public void draw (Graphics g)
     {
-
+        for(int i = 0; i< screenHeight/unitSize;i++)
+        {
+            g.drawLine(i*unitSize,0,i*unitSize,screenHeight);
+            g.drawLine(0, i*unitSize,screenWidth, i*unitSize);
+        }
+        g.setColor(Color.red);
+        g.fillOval(appleX, appleY,unitSize,unitSize);
     }
     public void newApple()
     {
-        newApple();
+        appleX = random.nextInt(screenWidth/unitSize) * unitSize;
+        appleY = random.nextInt(screenHeight/unitSize) * unitSize;
         
     }
     public void checkApple()

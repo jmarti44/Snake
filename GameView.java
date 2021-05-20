@@ -5,8 +5,8 @@ public class GameView extends JFrame
     
     GameView()
     {
-        GamePanel panel = new GamePanel();
-        this.add(panel);
+        //System.out.println("hello?");
+        this.add(new GamePanel());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);

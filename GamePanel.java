@@ -60,22 +60,59 @@ public class GamePanel extends JPanel implements ActionListener
     }
     public void paintComponent(Graphics g)
     {
-        System.out.println("is paint being called?");
         super.paintComponent(g);
         draw(g);
     }
+    public void move()
+    {
+        for (int i = bodyParts; i>0;i--)
+        {
+            x[i] = x[i-1];
+            y[i] = y[i-1];
+        }
+        switch(direction)
+        {
+            case 'U':
+                y[0] = y[0] - unitSize;
+                break;
+            case 'D':
+                y[0] = y[0] + unitSize;
+                break;
+            case 'L':
+                x[0] = x[0] - unitSize;
+                break;
+            case 'R':
+                x[0] = x[0] + unitSize;
+                break;
+
+        }
+    }
     public void draw (Graphics g)
     {
-        for(int i = 0; i< screenHeight/unitSize;i++)
-        {
-            g.drawLine(i*unitSize,0,i*unitSize,screenHeight);
-            g.drawLine(0, i*unitSize,screenWidth, i*unitSize);
-        }
+      
         g.setColor(Color.red);
         g.fillOval(appleX, appleY,unitSize,unitSize);
+        //drawing head and body of the snake
+        for (int i =0; i<bodyParts;i++)
+        {
+            //head of the snake
+            if (i == 0)
+            {
+                g.setColor(Color.green);
+                g.fillRect(x[i], y[i], unitSize, unitSize);
+            }
+            //body of the snake
+            else
+            {
+                g.setColor(new Color(45,180,0));
+                g.fillRect(x[i], y[i], unitSize, unitSize);
+
+            }
+        }
     }
     public void newApple()
     {
+        //generating a random x and y coordinate for the apple
         appleX = random.nextInt(screenWidth/unitSize) * unitSize;
         appleY = random.nextInt(screenHeight/unitSize) * unitSize;
         
@@ -86,7 +123,39 @@ public class GamePanel extends JPanel implements ActionListener
     }
     public void checkCollisions()
     {
-
+        for (int i = bodyParts; i>0; i--)
+        {
+            
+            //head collides with the body
+            if (x[0] == x[i] && y[0] == y[i])
+            {
+                run = false;    //gameOver
+            }
+            //head makes contact with left border
+            if (x[0] <0)
+            {
+                run = false;
+            }
+            //head makes contact with right border 
+            if (x[0]>screenWidth)
+            {
+                run = false;
+            }
+            //head touches top border 
+            if (y[0]<0)
+            {
+                run = false;
+            }
+            //head touches bottom border
+            if (y[0]>screenHeight)
+            {
+                run = false;
+            }
+            if (run == false)
+                timer.stop();
+            
+        
+        }
     }
     public void gameOver(Graphics g)
     {
@@ -94,7 +163,15 @@ public class GamePanel extends JPanel implements ActionListener
     }
     public void actionPerformed(ActionEvent e)
     {
+        //System.out.println("am i being called");
+        if (run)
+        {
+            move();
+            checkApple();
+            checkCollisions();
 
+        }
+       repaint();
     }
     public class myKeyAdapter extends KeyAdapter
     {

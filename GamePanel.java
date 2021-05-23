@@ -89,7 +89,9 @@ public class GamePanel extends JPanel implements ActionListener
     }
     public void draw (Graphics g)
     {
-      
+      if (run)
+      {
+    
         g.setColor(Color.red);
         g.fillOval(appleX, appleY,unitSize,unitSize);
         //drawing head and body of the snake
@@ -106,9 +108,18 @@ public class GamePanel extends JPanel implements ActionListener
             {
                 g.setColor(new Color(45,180,0));
                 g.fillRect(x[i], y[i], unitSize, unitSize);
-
             }
         }
+        //score on top of the panel
+        g.setColor(Color.red);
+        g.setFont(new Font("Int Free",Font.BOLD,40));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Score: " + apples,(screenWidth - metrics.stringWidth("Score:  + apples"))/2,g.getFont().getSize());
+      }
+
+      //game over called--> when a border is reached
+      else
+        gameOver(g);
     }
     public void newApple()
     {
@@ -119,7 +130,12 @@ public class GamePanel extends JPanel implements ActionListener
     }
     public void checkApple()
     {
-
+        if (x[0] == appleX && y[0] == appleY)
+        {
+            bodyParts = bodyParts + 1;
+            apples = apples + 1;
+            newApple();
+        }
     }
     public void checkCollisions()
     {
@@ -158,8 +174,18 @@ public class GamePanel extends JPanel implements ActionListener
         }
     }
     public void gameOver(Graphics g)
-    {
+    { 
+        //score text
+        g.setColor(Color.red);
+        g.setFont(new Font("Int Free",Font.BOLD,40));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Score: " + apples,(screenWidth - metrics.stringWidth("Score:  + apples"))/2,g.getFont().getSize());
+        g.setColor(Color.red);
 
+        //game over text
+        g.setFont(new Font("Int Free",Font.BOLD,75));
+        FontMetrics metricsG = getFontMetrics(g.getFont());
+        g.drawString("Game Over",(screenWidth - metricsG.stringWidth("GameOver"))/2,screenHeight/2 );
     }
     public void actionPerformed(ActionEvent e)
     {

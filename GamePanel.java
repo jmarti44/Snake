@@ -177,7 +177,33 @@ public class GamePanel extends JPanel implements ActionListener
     {
         public void keyPressed(KeyEvent e)
         {
-
+            //implementing snake control
+            switch (e.getKeyCode())
+            {
+                case KeyEvent.VK_LEFT:
+                    if (direction!= 'R')
+                    {
+                        direction = 'L';
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if (direction != 'L')
+                    {
+                        direction = 'R';
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    if (direction != 'D')
+                    {
+                        direction = 'U';
+                    }
+                case KeyEvent.VK_DOWN:
+                    if (direction != 'U')
+                    {
+                        direction = 'D';
+                    }
+                    break;
+            }
         }
     }
 }

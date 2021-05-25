@@ -8,9 +8,13 @@ import java.awt.*;
 public class GameMenu extends JPanel implements ActionListener
 {
 
-
     static final int screenWidth = 600;
     static final int screenHeight = 600;
+
+
+    public Rectangle playButton = new Rectangle (GamePanel.screenWidth/4 + 110, 150,100,50);
+    public Rectangle settingButton = new Rectangle (GamePanel.screenWidth/4 + 110, 250,100,50);
+    public Rectangle quitButton = new Rectangle (GamePanel.screenWidth/4 + 110, 350,100,50);
 
     GameMenu()
     {
@@ -28,24 +32,40 @@ public class GameMenu extends JPanel implements ActionListener
     public void draw(Graphics g)
     {
         //Menu heading
+
+    
+        Graphics2D g2 = (Graphics2D)g;
+
+
         Font title = new Font("arial",Font.BOLD,50);
         g.setFont(title);
         g.setColor(Color.green);
         g.drawString("Snake Game", GamePanel.screenWidth/4,100);
 
-        //Setting heading
-        Font settings = new Font("arial",Font.BOLD,25);
-        g.setFont(settings);
-        g.setColor(Color.white);
-        g.drawString("Pre-settings",GamePanel.screenWidth/3,200);
 
+        
+        Font button = new Font("arial",Font.BOLD,15);
+        g.setFont(button);
+        g.setColor(Color.white);
+        g.drawString("Play", playButton.x +30,playButton.y +30);
+        g.drawString("Settings", settingButton.x +20,settingButton.y +30);
+        g.drawString("Quit", quitButton.x +30,quitButton.y +30);
+        
+
+
+        g2.draw(playButton);
+        g2.draw(settingButton);
+        g2.draw(quitButton);
+
+
+
+
+
+        //Setting heading
+       
+        
 
         //Border selection 
-        JRadioButton gameOver = new JRadioButton("Game Over");
-       
-
-        JRadioButton bounce = new JRadioButton("Bounce back in the opposite direction");
-        JRadioButton opposite = new JRadioButton("Enter from the opposite side");
         /**
         ButtonGroup borderGroup = new ButtonGroup();
 
